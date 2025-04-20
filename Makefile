@@ -4,12 +4,18 @@ default:
 build:
 	go build .
 
-install: build
+build-prod:
+	# CGO_ENABLED=0: Disable CGO to ensure the binary is statically linked
+	# -ldflags="-s -w": Strip debug information and reduce binary size
+	# -a force rebuilding of packages that are already up-to-date
+	CGO_ENABLED=0 go build -ldflags="-s -w" -o aicoder
+
+install: build-prod
 	sudo cp aicoder /usr/local/bin/aicoder
 	sudo cp aicoder.json /usr/local/bin/aicoder.json
 	rm -rf aicoder
 
-dist: build
+dist: build-prod
 	mkdir -p dist
 	cp aicoder dist/aicoder
 	cp aicoder.json dist/aicoder.json

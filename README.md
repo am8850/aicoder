@@ -1,6 +1,6 @@
-# AI Coder
+# aicoder - Command-line tool
 
-AI Coder is command-line application designed to accelerate software development by generating scaffolding code and/or refactoring existing code. It leverages OpenAI's API to create project structures, boilerplate code, and implementation suggestions based on simple prompts. If you are running ollama, this application can also call the ollama endpoints with local models.
+**aicoder** is command-line application designed to accelerate software development by generating scaffolding code and/or refactoring existing code. It leverages OpenAI's API to create project structures, boilerplate code, and implementation suggestions based on simple prompts. This application can also call the Ollama endpoints with local models.
 
 ## Features
 
@@ -8,12 +8,13 @@ AI Coder is command-line application designed to accelerate software development
 - Create boilerplate code for various programming languages and frameworks
 - Interactive mode to refine and expand generated code
 - Customizable templates and configurations
+- Code evaluation and refactoring (single file)
 
 ## Installation
 
 ### Prerequisites
 
-- Go 1.23 or later
+- Go 1.20 or later
 - OpenAI API key
 
 ### From Source
@@ -21,8 +22,8 @@ AI Coder is command-line application designed to accelerate software development
 Clone the repository:
 
 ```bash
-git clone https://github.com/am8850/ai-scaffolder.git
-cd ai-scaffolder
+git clone https://github.com/am8850/aicoder.git
+cd aicoder
 ```
 
 Build the executable:
@@ -68,21 +69,21 @@ Create an `./aicoder.json` file with the following content:
 aicoder -p "Create a Python hello world application."
 ```
 
-Generate main.py:
+Generated `main.py`:
 
 ```python
 print('Hello, World!')
 ```
 
-## Examples
+## Scaffolding examples
 
-Generate a Go microservice:
+Generate a Go Gin API:
 
 ```bash
 aicoder -p "Create a Golang REST API using Gin to manage customers."
 ```
 
-Generate main.go
+Generated: `main.go`
 
 ```go
 package main
@@ -156,8 +157,54 @@ Scaffold a React component:
 ```bash
 INSTRUCTIONS=$(cat ./instructions.md)
 PRD=$(cat ./prd.md)
-cliai sc -p "Generate the application based on the following intructions and product specifications: $INSTRUCTIONS $PRD"
+aicoder code -p "Generate the application based on the following intructions and product specifications: $INSTRUCTIONS $PRD"
 ```
+
+## Refactoring examples
+
+```bash
+aicoder refactor -f main.go
+```
+
+Results
+```text
+Code information:
+
+Readability score: 7
+Readability score reason:
+The code is relatively clear due to its concise structure and use of descriptive function names. However, it lacks comments explaining the purpose of each function call and the overall flow.
+
+Cyclomatic complexity score: 2
+Cyclomatic complexity score reason:
+The cyclomatic complexity is low as there are no conditional branches or loops. The code simply calls three functions sequentially.
+
+Continue to view the proposed code? (y/n): y
+
+Proposed code changes:
+
+package main
+
+import (
+        "aicoder/cmd"
+        "aicoder/pkg/config"
+        "aicoder/pkg/openai"
+)
+
+// main is the entry point of the application.
+// It initializes the configuration, executes commands, and disposes of the OpenAI client.
+func main() {
+        // Load application configuration.
+        config.GetConfig()
+
+        // Execute the main command logic.
+        cmd.Execute()
+
+        // Dispose of the OpenAI client to release resources.
+        openai.DisposeClient()
+}
+Write the code to a file? (y/n):
+```
+
 
 ## Project Structure
 
@@ -165,10 +212,10 @@ cliai sc -p "Generate the application based on the following intructions and pro
 - `pkg/`: Core packages
   - `config/`: Configuration handling
   - `openai/`: OpenAI API integration
-  - `scaffolder/`: Main scaffolding logic
+  - `refactor/`: Main refactoring logic
+  - `scaffolder/`: Main scaffolding logic  
   - `templates/`: Template management
 - `examples/`: Example outputs and use cases
-- `docs/`: Documentation
 
 ## Contributing
 
