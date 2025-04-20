@@ -60,6 +60,16 @@ Where:
   - type: `openai`
   - Key: `123`
 
+## Installation
+
+- Clone the repo
+- Type install: `make install`
+
+### Destribution
+
+- `make dist` generates a `aicoder.zip` with the executable and the configuration files
+- I generally `scp` copy this file to the running server and unzip and place the files at `/usr/local/bin`
+
 ## Usage
 
 ### Basic Usage
