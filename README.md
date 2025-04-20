@@ -41,14 +41,6 @@ go install
 ### Configuration
 
 Create an `./aicoder.json` file with the following content:
-
-> Note: set the type to either: azure or openai
-
-> Note: to run locally using ollama:<br>set the endpoint to `http://localhost:11434/v1/chat/completions`
-<br>Set the model to the desired model: `phi3`
-<br>Set the type to: `openai`
-<br>Set the key to `ollama`
-
 ```json
 {
     "endpoint": "https://<NAME>.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2025-01-01-preview",
@@ -60,6 +52,13 @@ Create an `./aicoder.json` file with the following content:
 
 }
 ```
+
+Where:
+- Type: `azure` or `openai`
+- For Ollana:
+  - Endpont: `http://localhost:11434/v1/chat/completions`
+  - type: `openai`
+  - Key: `123`
 
 ## Usage
 
@@ -204,22 +203,6 @@ func main() {
 }
 Write the code to a file? (y/n):
 ```
-
-
-## Project Structure
-
-- `cmd/`: Command-line interface implementation
-- `pkg/`: Core packages
-  - `config/`: Configuration handling
-  - `openai/`: OpenAI API integration
-  - `refactor/`: Main refactoring logic
-  - `scaffolder/`: Main scaffolding logic  
-  - `templates/`: Template management
-- `examples/`: Example outputs and use cases
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
